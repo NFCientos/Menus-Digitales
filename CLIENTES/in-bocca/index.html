@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#26382d">
+<title>In Bocca | Menú</title>
+<style>
+:root{--green:#26382d;--olive:#78815b;--cream:#f7f4ec;--paper:#fffdf8;--ink:#252820;--muted:#77786f;--line:#e7e2d7;--gold:#c59b59}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Georgia,"Times New Roman",serif}
+.hero{background:var(--green);color:#fffdf8;padding:42px 22px 34px;text-align:center;position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"";position:absolute;border:1px solid #ffffff20;border-radius:50%;width:260px;height:260px;top:-170px}
+.hero:before{left:-100px}
+.hero:after{right:-100px;top:auto;bottom:-210px}
+.eyebrow{font:600 10px/1.4 Arial,sans-serif;letter-spacing:4px;text-transform:uppercase;color:#d9c69e}
+h1{font-size:clamp(42px,10vw,66px);font-weight:400;letter-spacing:1px;margin:10px 0 5px}
+.subtitle{font:12px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:#e3e1d8}
+.rule{width:46px;height:2px;background:var(--gold);margin:20px auto 0}
+.intro{max-width:680px;margin:0 auto;padding:24px 22px 12px;text-align:center;color:var(--muted);font:14px/1.6 Arial,sans-serif}
+.nav-wrap{position:sticky;top:0;z-index:10;background:var(--cream);border-bottom:1px solid var(--line);padding:10px 12px}
+.nav{display:flex;gap:8px;overflow-x:auto;max-width:900px;margin:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{white-space:nowrap;border:1px solid #d9d4c8;background:transparent;color:var(--green);border-radius:30px;padding:10px 15px;font:600 12px Arial,sans-serif;cursor:pointer}
+.nav button.active{background:var(--green);border-color:var(--green);color:white}
+main{max-width:900px;margin:0 auto;padding:18px 17px 55px}
+.category{padding-top:16px;scroll-margin-top:80px}
+.category h2{font-size:27px;font-weight:400;color:var(--green);margin:15px 0 5px}
+.category .hint{font:11px Arial,sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:var(--olive);margin-bottom:14px}
+.items{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+.item{padding:17px 0 16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;min-height:90px}
+.item h3{font-size:17px;font-weight:400;margin:0 0 6px;color:#252820}
+.item p{font:13px/1.45 Arial,sans-serif;color:var(--muted);margin:0;max-width:390px}
+.price{font:600 14px Arial,sans-serif;color:var(--green);white-space:nowrap;margin-top:8px}
+footer{background:var(--green);color:#f7f4ec;text-align:center;padding:28px 18px;font:12px/1.6 Arial,sans-serif}
+footer strong{display:block;font:26px Georgia,serif;margin-bottom:5px}
+@media(max-width:620px){
+.items{grid-template-columns:1fr}
+.hero{padding:34px 18px 28px}
+main{padding-left:20px;padding-right:20px}
+.item{min-height:unset}
+.item h3{font-size:17px}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="eyebrow">Cucina italiana</div>
+<h1>In Bocca</h1>
+<div class="subtitle">Menú</div>
+<div class="rule"></div>
+</header>
+
+<div class="intro">Una carta para disfrutar los sabores de Italia.</div>
+<div class="nav-wrap"><nav class="nav" id="nav"></nav></div>
+<main id="menu"></main>
+
+<footer><strong>In Bocca</strong>Buon appetito.</footer>
+
+<script>
+const menu = [
+{name:"Lasagna",items:[
+["Lasagna Ragù De Carne","Láminas de pasta rellena con salsa pomodoro, salsa bechamel, queso mozzarella, tomates asados al romero y carne.",8900],
+["Lasagna Verdure","Láminas de pasta rellena con salsa pomodoro, salsa fiorentina, queso mozzarella, choclo y champiñones.",8900]
+]},
+{name:"Bebidas",items:[
+["Inca Kola Original 350 ml","",1500],
+["Coca-Cola Original 350 ml","",1500],
+["Coca-Cola Sin Azúcar 350 ml","",1500],
+["Fanta Naranja 350 ml","",1500],
+["Fanta Naranja Sin Azúcar 350 ml","",1500],
+["Sprite 350 ml","",1500],
+["Sprite Zero 350 ml","",1500],
+["Coca-Cola Original 1,5 L","",2500],
+["Coca-Cola Sin Azúcar 1,5 L","",2500],
+["Inca Kola Original 1,5 L","",2500],
+["Inca Kola Sin Azúcar 1,5 L","",2500],
+["Fanta Naranja 1,5 L","",2500],
+["Fanta Naranja Sin Azúcar 1,5 L","",2500],
+["Sprite 1,5 L","",2500],
+["Sprite Zero 1,5 L","",2500]
+]},
+{name:"Pizze Tradizionale",items:[
+["Crudo","Pizza con pomodoro, mozzarella, albahaca, aceite de oliva. Después del horno se agrega: rúcula, jamón serrano, parmesano y tamaño a elegir.",14700],
+["Margherita","Pizza con pomodoro, mozzarella, albahaca y aceite de oliva. Tamaño a elegir.",11300],
+["Napoletana","Pizza con pomodoro, mozzarella, jamón, aceitunas negras, orégano. Tamaño a elegir.",11000],
+["Capricciosa","Pizza con pomodoro, mozzarella, champiñón, jamón, alcachofa. Tamaño a elegir.",14700],
+["Verdure","Pizza pomodoro, mozzarella, champiñón, berenjena, zapallo italiano, pimentón, ricotta, aceitunas, albahaca y aceite de oliva. Tamaño a elegir.",11400],
+["Salamino","Pizza con pomodoro, mozzarella, salame, aceitunas y orégano. Tamaño a elegir.",13900],
+["Formaggi","Pizza con pomodoro, mozzarella, queso azul, queso de cabra, parmesano, pesto. Tamaño a elegir.",14000],
+["Calzone Napoletano","Pizza cerrada con ricotta de la casa, queso de cabra, queso azul, salame, albahaca, pimienta, aceite de oliva, pomodoro y parmesano.",12500],
+["Calzone Vegetale","Pizza cerrada con ricotta, champiñón, espinaca, mozzarella, albahaca, pimienta y aceite de oliva. Al cerrar: pomodoro, mozzarella y parmesano.",10500],
+["Marinara","Pizza con pomodoro, ajo, orégano, albahaca y aceite de oliva. Tamaño a elegir.",8900]
+]},
+{name:"Pizze Della Casa",items:[
+["Pepperoni","Pizza con pomodoro, mozzarella y pepperoni.",13000],
+["Porca","Pizza con pomodoro, mozzarella, tocino, cebollín y oliva.",13000],
+["Gamberetti","Pizza con pomodoro, mozzarella, camarón al ajillo, perejil y zeste de limón. Tamaño a elegir.",14000],
+["Rota Chilena","Pizza con pomodoro, mozzarella, longaniza, cebolla morada, ají cristal, tomate cherry, cilantro y un toque de bechamel al ajo.",13000],
+["Estate","Pizza con pomodoro, ajo, orégano, albahaca y aceite de oliva. Después del horno se agrega: rúcula, queso de cabra, tomate cherry, anchoas y zeste de limón.",14000],
+["Caramella","Pizza con pomodoro, mozzarella, cebolla caramelizada al carmenere, queso de cabra y aceitunas de azapa.",13000],
+["Quindici","Pizza con pomodoro, mozzarella, queso de cabra, choclo, huacatay, aceitunas y aceite de oliva. Tamaño a elegir.",13000],
+["Verde Secco","Pizza con pomodoro, mozzarella, espinaca, pesto, nueces y aceite de oliva.",13000],
+["Dimora","Pizza con pomodoro, mozzarella, cebolla morada, aceitunas negras, salsa de betarraga, albahaca y aceite de oliva.",12000],
+["Rosseblu","Pizza con pomodoro, mozzarella, láminas de pera al vino tinto y queso azul.",12000]
+]},
+{name:"Pastas",items:[
+["Pasta Fettuccine","Pasta larga y plana, a base de harina, huevo y sémola con salsa a elegir.",8100],
+["Ravioli Blu","Pasta morada teñida con betarraga, rellena de cebolla caramelizada, queso azul y salsa a elegir.",8100],
+["Ravioli Pollo","Pasta al huevo rellena de ragú de pollo, verduras estofadas de temporada y salsa a elegir.",8100],
+["Sorrentinos Zucca","Pasta al huevo relleno de zapallo camote asado al romero con ajos confitados y queso crema.",8100],
+["Ravioli Caprese","Pasta al huevo rellena de tomates deshidratados al albahaca, queso mozzarella y salsa a elegir.",8100],
+["Gnocchi","Pasta a base de papa, harina de trigo y yema de huevo con salsa a elegir.",8100],
+["Agnolotti De Espinaca","Pasta al huevo rellena de espinaca, queso ricotta de la casa y queso parmesano.",8100]
+]}
+];
+
+const money=n=>"$"+n.toLocaleString("es-CL");
+const nav=document.getElementById("nav");
+const root=document.getElementById("menu");
+
+menu.forEach((cat,i)=>{
+const id="cat-"+i;
+const b=document.createElement("button");
+b.textContent=cat.name;
+b.className=i===0?"active":"";
+b.onclick=()=>{
+document.getElementById(id).scrollIntoView({behavior:"smooth"});
+document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
+b.classList.add("active");
+};
+nav.appendChild(b);
+
+const section=document.createElement("section");
+section.className="category";
+section.id=id;
+section.innerHTML=`
+<h2>${cat.name}</h2>
+<div class="hint">${cat.items.length} opciones</div>
+<div class="items">
+${cat.items.map(([name,desc,price])=>`
+<article class="item">
+<div>
+<h3>${name}</h3>
+${desc?`<p>${desc}</p>`:""}
+</div>
+<div class="price">${money(price)}</div>
+</article>
+`).join("")}
+</div>`;
+root.appendChild(section);
+});
+</script>
+</body>
+</html>
